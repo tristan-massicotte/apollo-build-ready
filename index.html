@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<!--
+  OUTREACH PAGE TEMPLATE · Tristan Massicotte
+  - One file, no dependencies. Works offline and on GitHub Pages.
+  - Language: every visible string exists as <span lang="en"> and <span lang="fr">.
+    Set <html data-langs="en"> for English only (toggle hidden),
+    or data-langs="fr en" for French default with an English toggle.
+  - Per-company accent: change --accent in :root. Never use the company's logo, photos or brand colours.
+-->
+<html lang="en" data-langs="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Build Ready: 99% → 37% · Tristan Massicotte</title>
+<style>
+  :root{
+    --accent:#0369a1;            /* per-company accent */
+    --accent-soft:#eef7fc;
+    --ink:#0f172a; --body:#334155; --quiet:#64748b; --line:#e2e8f0; --bg:#ffffff; --panel:#f8fafc;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;color:var(--body);background:var(--bg);line-height:1.55;font-size:16px}
+  main{max-width:680px;margin:0 auto;padding:28px 20px 56px}
+  span[lang]{display:none} html[data-show="en"] span[lang="en"], html[data-show="fr"] span[lang="fr"]{display:inline}
+  .top{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--quiet);margin-bottom:28px}
+  .toggle{border:1px solid var(--line);border-radius:999px;padding:4px;display:none;gap:2px}
+  html[data-langs~="fr"][data-langs~="en"] .toggle{display:inline-flex}
+  .toggle button{border:0;background:none;font:inherit;font-size:12px;padding:4px 10px;border-radius:999px;color:var(--quiet);cursor:pointer}
+  .toggle button[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .kicker{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+  h1{color:var(--ink);font-size:34px;line-height:1.1;margin:0 0 14px;letter-spacing:-.02em}
+  h1 .big{display:block;font-size:56px;letter-spacing:-.03em}
+  .lead{font-size:18px;margin:0 0 8px}
+  .note{font-size:13px;color:var(--quiet);margin:0}
+  section{margin-top:44px}
+  h2{color:var(--ink);font-size:21px;line-height:1.25;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{margin:0 0 18px;color:var(--body)}
+  /* takt bars */
+  .bars{display:grid;gap:10px}
+  .bar{display:grid;grid-template-columns:76px 1fr;align-items:center;gap:12px}
+  .bar .vol{font-size:14px;color:var(--quiet);text-align:right;font-variant-numeric:tabular-nums}
+  .bar .track{position:relative;height:34px}
+  .bar .fill{height:100%;border-radius:6px;background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);display:flex;align-items:center;padding:0 10px;min-width:max-content}
+  .bar.hot .fill{background:var(--accent);border-color:var(--accent)}
+  .bar .fill b{font-size:14px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .bar.hot .fill b{color:#fff}
+  .chart{margin-top:28px}
+  .chart .sub{font-size:14px;color:var(--quiet);margin:0 0 10px}
+  /* about card */
+  .me{margin-top:32px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .me p{margin:0 0 14px}
+  .me b{color:var(--ink)}
+  .btns{display:flex;flex-wrap:wrap;gap:8px}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:10px;font-size:15px;font-weight:600;text-decoration:none;border:1px solid var(--accent);color:var(--accent);background:var(--bg)}
+  .btn.primary{background:var(--accent);color:#fff}
+  /* collapsible analysis */
+  .cards{display:grid;gap:10px}
+  details.card{border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+  details.card[open]{border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+  details.card summary{list-style:none;cursor:pointer;padding:16px 48px 16px 16px;position:relative}
+  details.card summary::-webkit-details-marker{display:none}
+  details.card summary::after{content:"+";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:24px;line-height:1;color:var(--accent)}
+  details.card[open] summary::after{content:"\2212"}
+  details.card summary h3{margin:0;color:var(--ink);font-size:17px;line-height:1.3}
+  details.card summary .take{display:block;font-size:14px;color:var(--quiet);margin-top:3px}
+  details.card .body{padding:0 16px 16px}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+  .stat:last-child{grid-column:1/-1}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  .stat b{display:block;color:var(--ink);font-size:24px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .stat span{font-size:13px;color:var(--quiet)}
+  .stat b span{font-size:inherit;color:inherit}
+  /* flow */
+  .flow{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+  .flow li{border:1px solid var(--line);border-radius:12px;padding:12px 14px;position:relative}
+  .flow li+li::before{content:"";position:absolute;left:24px;top:-9px;width:1px;height:8px;background:var(--quiet)}
+  .flow li.hot{border:2px solid var(--accent);background:var(--accent-soft)}
+  .flow .name{font-weight:600;color:var(--ink)}
+  .flow .why{font-size:14px;margin-top:2px}
+  .flow.list li+li::before{display:none}
+  .flow .tag{float:right;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--accent)}
+  /* plan */
+  .plan{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  .plan li{display:grid;grid-template-columns:68px 1fr;gap:10px}
+  .plan .wk{font-size:13px;font-weight:600;color:var(--accent);padding-top:2px}
+  .plan .what b{color:var(--ink)}
+  .ask{margin-top:18px;background:var(--ink);color:#e2e8f0;border-radius:14px;padding:20px}
+  .ask b{color:#fff}
+  /* links */
+  .links{display:grid;gap:10px}
+  .links a{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:inherit}
+  .links a:active,.links a:hover{border-color:var(--accent)}
+  .links strong{display:block;color:var(--ink)}
+  .links small{color:var(--quiet);font-size:13px}
+  .links .arr{color:var(--accent);font-size:20px}
+  footer{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:14px}
+  footer a{color:var(--accent)}
+  .src{font-size:12px;color:var(--quiet);margin-top:14px}
+  @media (min-width:640px){
+    main{padding:48px 24px 72px}
+    h1{font-size:40px} h1 .big{font-size:72px}
+    .stats{grid-template-columns:repeat(3,1fr)} .stat:last-child{grid-column:auto}
+    .bar{grid-template-columns:96px 1fr}
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <div class="top">
+    <span>Tristan Massicotte · U of T Industrial Engineering</span>
+    <span class="toggle" role="group" aria-label="Language">
+      <button type="button" data-set="fr">FR</button><button type="button" data-set="en">EN</button>
+    </span>
+  </div>
+
+  <p class="kicker"><span lang="en">Notes for Apptronik's operations team</span></p>
+  <h1>
+    <span lang="en">Inventory accuracy, by kit</span>
+    <span class="big">99% → 37%</span>
+  </h1>
+  <p class="lead"><span lang="en">At 99% record accuracy per part, a 100-part subassembly kit is fully right in the system only about 37% of the time. Your postings say the team wants to materially improve inventory accuracy and checks Build Ready by subassembly. Here is why that is the right fight, and how I'd help.</span></p>
+  <p class="note"><span lang="en">Built from public information only. Assumptions are labelled.</span></p>
+
+  <div class="chart">
+    <p class="sub"><span lang="en">Chance that every record in a 100-part kit is right.</span></p>
+    <div class="bars">
+      <!-- widths = kit accuracy -->
+      <div class="bar"><div class="vol">98%</div><div class="track"><div class="fill" style="width:13%"><b>13%</b></div></div></div>
+      <div class="bar hot"><div class="vol">99%</div><div class="track"><div class="fill" style="width:37%"><b>37%</b></div></div></div>
+      <div class="bar"><div class="vol">99.5%</div><div class="track"><div class="fill" style="width:61%"><b>61%</b></div></div></div>
+      <div class="bar"><div class="vol">99.9%</div><div class="track"><div class="fill" style="width:90%"><b>90%</b></div></div></div>
+    </div>
+    <p class="src"><span lang="en">Left: record accuracy per part number. Kit right = accuracy ^ 100. The 100-part kit and independent errors are my assumptions; this is math, not Apptronik data.</span></p>
+  </div>
+
+  <!-- WHO I AM: visible without scrolling through the analysis -->
+  <div class="me">
+    <p><span lang="en"><b>I'm Tristan</b>, a 2nd-year Industrial Engineering student at the University of Toronto. At Technimount, a manufacturer in Québec, I built an MRP system that <b>cut order processing time by 90%</b>, and I now build the production board that <b>keeps inventory accurate and tracks it along the assembly line</b>.</span></p>
+    <div class="btns">
+      <a class="btn primary" href="Tristan_Massicotte_Resume.pdf" target="_blank" rel="noopener"><span lang="en">Resume</span></a>
+      <a class="btn" href="https://tristan-massicotte.github.io/engineering-internship-highlights" target="_blank" rel="noopener"><span lang="en">Internship highlights</span></a>
+      <a class="btn" href="https://linkedin.com/in/tristan-massicotte" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+
+  <!-- ANALYSIS: collapsed by default, one-line takeaway on each -->
+  <section>
+    <h2><span lang="en">The analysis</span></h2>
+    <p class="sub"><span lang="en">Tap to open. Built from public information; assumptions labelled.</span></p>
+    <div class="cards">
+      <details class="card">
+        <summary><h3><span lang="en">1. Accuracy compounds by kit</span></h3><span class="take"><span lang="en">A kit is build-ready only if every one of its records is right.</span></span></summary>
+        <div class="body">
+          <div class="stats">
+            <div class="stat"><b>37%</b><span><span lang="en">of 100-part kits fully right at 99% per part</span></span></div>
+            <div class="stat"><b>99.9%</b><span><span lang="en">per part to get 9 kits in 10 right</span></span></div>
+            <div class="stat"><b>~1 in 1,000</b><span><span lang="en">wrong records allowed across part numbers at that level</span></span></div>
+          </div>
+          <p class="src"><span lang="en">Kit right = (per-part accuracy) ^ (parts in the kit). Real errors cluster (same location, same receiver), which can move the number either way. The kit size is my assumption.</span></p>
+        </div>
+      </details>
+      <details class="card">
+        <summary><h3><span lang="en">2. Where records go wrong</span></h3><span class="take"><span lang="en">Receiving, two inventories after the CM transfer, and engineering changes.</span></span></summary>
+        <div class="body">
+          <p class="sub"><span lang="en">The material flow from prototype to production, as Apptronik's postings describe it. Highlighted steps are my hypotheses.</span></p>
+          <ol class="flow">
+            <li class="hot"><span class="tag"><span lang="en">Watch</span></span><div class="name"><span lang="en">Receiving and stock</span></div><div class="why"><span lang="en">Every miss has one of three causes: never received, wrong location, or used without a transaction. Counting the parts that stop builds most often, most often (ABC), finds them before a kit is released.</span></div></li>
+            <li class="hot"><span class="tag"><span lang="en">Watch</span></span><div class="name"><span lang="en">Contract manufacturer transfer</span></div><div class="why"><span lang="en">Your postings mention "Contract Manufacturer technical transfer". After it, there are two inventories (yours and the CM's), consigned parts, and two systems to keep in sync.</span></div></li>
+            <li><div class="name"><span lang="en">Kitting by subassembly ("Build Ready")</span></div></li>
+            <li class="hot"><span class="tag"><span lang="en">Watch</span></span><div class="name"><span lang="en">Engineering changes (ECO / MCO)</span></div><div class="why"><span lang="en">From prototype builds through production ramp, each change makes some records wrong until it is processed: old revisions on the shelf, new ones not yet received.</span></div></li>
+            <li><div class="name"><span lang="en">Assembly and test</span></div></li>
+          </ol>
+        </div>
+      </details>
+      <details class="card">
+        <summary><h3><span lang="en">3. A model you can run on your numbers</span></h3><span class="take"><span lang="en">Kit accuracy, a cycle-counting plan, and a Build Ready check.</span></span></summary>
+        <div class="body">
+          <ol class="flow list">
+            <li><div class="name"><span lang="en">Kit Accuracy</span></div><div class="why"><span lang="en">Chance a whole kit is right, by per-part accuracy and kit size, and the accuracy you need for a target.</span></div></li>
+            <li><div class="name"><span lang="en">Cycle Counting</span></div><div class="why"><span lang="en">An ABC example: about 17 counts a day in total, 7 of them on the parts that stop builds.</span></div></li>
+            <li><div class="name"><span lang="en">Build Ready</span></div><div class="why"><span lang="en">One subassembly: kits buildable on paper, the limiting part, and the chance the records are all right.</span></div></li>
+          </ol>
+          <p class="src" style="margin-bottom:14px"><span lang="en">Blue cells are inputs; yellow cells are my assumptions, to replace with real data. All quantities are examples.</span></p>
+          <div class="btns"><a class="btn primary" href="Build_Ready_Model_Tristan_Massicotte.xlsx"><span lang="en">Download the model (Excel)</span></a></div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- PLAN + ASK -->
+  <section>
+    <h2><span lang="en">My 16 weeks</span></h2>
+    <ol class="plan">
+      <li><span class="wk"><span lang="en">Wk 1–2</span></span><span class="what"><b><span lang="en">Count before I change anything.</span></b> <span lang="en">Shifts in receiving, the stockroom and the line; count every part of one subassembly and measure its real record accuracy as a baseline.</span></span></li>
+      <li><span class="wk"><span lang="en">Wk 3–6</span></span><span class="what"><b><span lang="en">Own Build Ready for that subassembly.</span></b> <span lang="en">A check before every kit release; each miss gets a root cause (never received, wrong location, unrecorded use) and a fix.</span></span></li>
+      <li><span class="wk"><span lang="en">Wk 7–11</span></span><span class="what"><b><span lang="en">Set up cycle counting.</span></b> <span lang="en">ABC classes, count frequencies and location control with the inventory and procurement team, and map what moves to the contract manufacturer.</span></span></li>
+      <li><span class="wk"><span lang="en">Wk 12–16</span></span><span class="what"><b><span lang="en">Run it and prove it.</span></b> <span lang="en">Measure accuracy and build stops against the week-2 baseline, fix what breaks, then take on a second subassembly.</span></span></li>
+    </ol>
+    <div class="ask">
+      <b><span lang="en">My ask:</span></b>
+      <span lang="en">a four-month summer 2027 internship in operations (inventory, materials or supply chain) in Austin. I'd come on a J-1 intern visa; I handle the paperwork, Apptronik signs a training plan.</span>
+    </div>
+  </section>
+
+  <!-- LINKS -->
+  <section>
+    <h2><span lang="en">Links</span></h2>
+    <div class="links">
+      <a href="Build_Ready_Model_Tristan_Massicotte.xlsx"><div><strong><span lang="en">Build Ready model (Excel)</span></strong><small><span lang="en">Swap in real numbers; everything recalculates</span></small></div><span class="arr">→</span></a>
+      <a href="Tristan_Massicotte_Resume.pdf" target="_blank" rel="noopener"><div><strong><span lang="en">Resume</span></strong><small><span lang="en">One page</span></small></div><span class="arr">→</span></a>
+      <a href="https://tristan-massicotte.github.io/engineering-internship-highlights" target="_blank" rel="noopener"><div><strong><span lang="en">What I built at Technimount</span></strong><small><span lang="en">MRP (−90% order processing time), production board, dashboards</span></small></div><span class="arr">→</span></a>
+    </div>
+  </section>
+
+  <footer>
+    <b>Tristan Massicotte</b> · <a href="mailto:tristanmassicotte@me.com">tristanmassicotte@me.com</a> · +1 581-980-9117 · <a href="https://linkedin.com/in/tristan-massicotte" target="_blank" rel="noopener">LinkedIn</a>
+    <p class="src"><span lang="en">Sources: Apptronik job postings (Greenhouse, Oct 2026): Sr. Manager of Inventory Management, Logistics, and Procurement; Manager, Operations Engineering - Supply Chain; Manager, Manufacturing Engineering. Apptronik, "Apptronik and Jabil Collaborate to Scale Production" (Feb 2025). Not affiliated with Apptronik.</span></p>
+  </footer>
+</main>
+<script>
+  (function(){
+    var root=document.documentElement;
+    var langs=(root.getAttribute('data-langs')||'en').split(/\s+/);
+    // All pages share one origin (tristan-massicotte.github.io), so remember the choice per page.
+    var key='lang:'+location.pathname;
+    var param=null; try{param=new URLSearchParams(location.search).get('lang')}catch(e){}
+    var saved=null; try{saved=localStorage.getItem(key)}catch(e){}
+    function set(l,remember){ if(langs.indexOf(l)<0) l=langs[0];
+      root.setAttribute('data-show',l); root.setAttribute('lang',l);
+      document.querySelectorAll('.toggle button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.set===l)});
+      if(remember){try{localStorage.setItem(key,l)}catch(e){}} }
+    document.querySelectorAll('.toggle button').forEach(function(b){b.addEventListener('click',function(){set(b.dataset.set,true)})});
+    // ?lang=fr (used in the QR code) wins over a remembered choice
+    set(param||saved||langs[0]);
+  })();
+</script>
+</body>
+</html>
